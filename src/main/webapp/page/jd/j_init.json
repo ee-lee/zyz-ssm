@@ -1,0 +1,27 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "href": "user.html"
+  },
+  "logoInfo": {
+    "title": "后台管理",
+    "image": "images/logo.png",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+      "title": "常规管理",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "志愿者用户",
+          "href": "user.html",
+          "icon": "fa fa-male",
+          "target": "_self"
+        }
+      ]
+    }
+  ]
+}

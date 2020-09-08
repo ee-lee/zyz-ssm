@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>首页</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <style>
+        .top-panel {
+            border: 1px solid #eceff9;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .top-panel > .layui-card-body {
+            height: 60px;
+        }
+
+        .top-panel-number {
+            line-height: 60px;
+            font-size: 30px;
+            border-right: 1px solid #eceff9;
+        }
+
+        .top-panel-tips {
+            line-height: 30px;
+            font-size: 12px
+        }
+    </style>
+</head>
+<body>
+<!--<div class="layuimini-container">-->
+<div class="layuimini-main">
+
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-xs12 layui-col-md3">
+
+            <div class="layui-card top-panel">
+                <div class="layui-card-header">活动数目</div>
+                <div class="layui-card-body">
+                    <div class="layui-row layui-col-space5">
+                        <div class="layui-col-xs9 layui-col-md12 top-panel-number" id="activity">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-col-xs12 layui-col-md3">
+
+            <div class="layui-card top-panel">
+                <div class="layui-card-header">新闻数目</div>
+                <div class="layui-card-body">
+                    <div class="layui-row layui-col-space5">
+                        <div class="layui-col-xs9 layui-col-md12 top-panel-number" id="news">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-col-xs12 layui-col-md3">
+
+            <div class="layui-card top-panel">
+                <div class="layui-card-header">志愿者人数</div>
+                <div class="layui-card-body">
+                    <div class="layui-row layui-col-space5">
+                        <div class="layui-col-xs9 layui-col-md12  top-panel-number" id="count">
+                            <!--                            9,054,056-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-col-xs12 layui-col-md3">
+
+            <div class="layui-card top-panel">
+                <div class="layui-card-header">管理员人数</div>
+                <div class="layui-card-body">
+                    <div class="layui-row layui-col-space5">
+                        <div class="layui-col-xs9 layui-col-md12 top-panel-number" id="jusercount">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="layui-row layui-col-space15">
+        <!--        <div class="layui-col-xs12 layui-col-md9">-->
+        <!--            <div id="echarts-records" style="background-color:#ffffff;min-height:400px;padding: 10px"></div>-->
+        <!--        </div>-->
+        <div class="layui-col-xs12 layui-col-md6">
+            <div id="echarts-pies" style="background-color:#ffffff;min-height:500px;padding: 20px"></div>
+        </div>
+        <div class="layui-col-xs12 layui-col-md6">
+            <div id="echarts-pies1" style="background-color:#ffffff;min-height:500px;padding: 20px"></div>
+        </div>
+    </div>
+
+
+    <div class="layui-row layui-col-space15">
+        <!--        <div class="layui-col-xs12 layui-col-md6">-->
+        <!--            <div id="echarts-dataset" style="background-color:#ffffff;min-height:300px;padding: 10px"></div>-->
+        <!--        </div>-->
+        <!--        <div class="layui-col-xs12 layui-col-md6">-->
+        <!--            <div id="echarts-map" style="background-color:#ffffff;min-height:300px;padding: 10px"></div>-->
+        <!--        </div>-->
+    </div>
+
+
+</div>
+<!--</div>-->
+<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="../../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+<script>
+    layui.use(['layer', 'echarts'], function () {
+
+
+        var $ = layui.jquery,
+            layer = layui.layer,
+            echarts = layui.echarts;
+        /**
+         * 玫瑰图表
+         */
+
+        $.ajax({
+            url: '../../user/welconme', //调用接口删除
+            method: 'post',
+            data: "",
+            dataType: 'JSON',
+            success: function (data) {
+                var count = data.count;
+                var jusercount = data.jusercount;
+                var no = data.no;
+                var yes = data.yes;
+
+                document.getElementById("count").innerHTML = count;
+                document.getElementById("jusercount").innerHTML = jusercount;
+                // layer.alert(data.result);
+
+                var echartsPies = echarts.init(document.getElementById('echarts-pies'), 'walden');
+                var optionPies = {
+                    title: {
+                        text: '志愿者',
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b} : {c} ({d}%)'
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                        data: ['未审核志愿者', '通过审核的志愿者']
+                    },
+                    series: [
+                        {
+                            name: '志愿者',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '60%'],
+                            roseType: 'radius',
+                            data: [
+                                {value: no, name: '未审核志愿者'},
+                                {value: yes, name: '通过审核的志愿者'}
+                            ],
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                };
+                echartsPies.setOption(optionPies);
+            }
+        });
+
+        /**
+         * 玫瑰图表
+         */
+        $.ajax({
+            url: '../../activity/welconme', //调用接口删除
+            method: 'post',
+            data: "",
+            dataType: 'JSON',
+            success: function (data) {
+                var counts = data.counts;
+                var activity = data.activity;
+                var news = data.news;
+                var ac = data.ac;
+                var acends = data.acends;
+                document.getElementById("news").innerHTML = news;
+                document.getElementById("activity").innerHTML = activity;
+                var echartsPies = echarts.init(document.getElementById('echarts-pies1'), 'walden');
+                var optionPies = {
+                    title: {
+                        text: '活动情况',
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b} : {c} ({d}%)'
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                        data: ['活动总数', '新闻总数', '活动完成的数目', '活动进行中的数目']
+                    },
+                    series: [
+                        {
+                            name: '活动',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '60%'],
+                            roseType: 'radius',
+                            data: [
+                                {value: activity, name: '活动总数'},
+                                {value: news, name: '新闻总数'},
+                                {value: acends, name: '活动完成的数目'},
+                                {value: ac, name: '活动进行中的数目'}
+                            ],
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                };
+                echartsPies.setOption(optionPies);
+            }
+        });
+
+        // // echarts 窗口缩放自适应
+        // window.onresize = function () {
+        //     echartsRecords.resize();
+        // }
+
+    });
+</script>
+</body>
+</html>

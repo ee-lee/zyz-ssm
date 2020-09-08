@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>新增</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+
+    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../lib/jq-module/zyupload/zyupload-1.0.0.min.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+</head>
+<body>
+<div class="layui-form layuimini-form">
+
+    <div class="layui-form-item">
+
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+            <legend>填写活动详情</legend>
+        </fieldset>
+    </div>
+
+    <div class="layui-form-item ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="layui-inline ">
+            <label class="layui-form-label ">创建日期</label>
+            <div class="layui-input-block ">
+                <input type="text" name="createtime" id="createtime" lay-verify="required" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">开始时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="starttime" lay-verify="required" id="starttime" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">结束时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="endtime" id="endtime" lay-verify="required" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="layui-form-item" pane="">
+        <label class="layui-form-label">选择类型</label>
+        <div class="layui-input-block">
+            <input type="radio" name="types" value="1" title="活动" checked="">
+            <input type="radio" name="types" value="0" title="新闻">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">标题</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" autocomplete="off" lay-verify="required" placeholder="请输入标题"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label required">活动描述</label>
+        <div class="layui-input-block">
+            <textarea type="text" name="problem" lay-verify="required" placeholder="请输入内容"
+                      class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">发布者</label>
+        <div class="layui-input-inline">
+            <input type="text" name="gname" lay-verify="required" placeholder="请输入" autocomplete="off"
+                   class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">填写用户名</div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">录取人数</label>
+        <div class="layui-input-inline">
+            <input type="text" name="maxnum" lay-verify="required" placeholder="请输入" autocomplete="off"
+                   class="layui-input">
+        </div>
+
+        <div class="layui-form-mid layui-word-aux"></div>
+        <label  class="layui-form-label required" style="display: none">已录取人数</label>
+        <div class="layui-input-inline" style="display: none">
+            <input type="text" name="signnum" lay-verify="required" placeholder="请输入" autocomplete="off"
+                  value="0" class="layui-input">
+        </div>
+
+        <!--图片-->
+        <div class="layui-form-item layui-form-mid ">
+            <div class="">
+                <div id="zyupload" lay-verify="" class="zyupload"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="addactivity">提交信息</button>
+        </div>
+        <div class="layui-form-mid layui-word-aux layui-input-block">提交后可以上传图片</div>
+    </div>
+    <input type="hidden" name="status" value="1"/>
+</div>
+
+<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="../../lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="../../lib/jq-module/zyupload/zyupload-1.0.0.min.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , laydate = layui.laydate,
+            $ = layui.$;
+        //日期
+        laydate.render({
+            elem: '#createtime',
+            type: 'datetime',
+            value: new Date()
+        });
+        laydate.render({
+            elem: '#starttime',
+            type: 'datetime'
+        });
+        laydate.render({
+            elem: '#endtime',
+            type: 'datetime'
+        });
+
+        //监听提交
+        form.on('submit(addactivity)', function (data) {
+            let aid;
+            $.ajax({
+                url: '../../activity/add',
+                method: 'post',
+                data: data.field,
+                dataType: 'JSON',
+                success: function (data) {
+                    alert(data.result);//返回值data为{"result":"提交成功"}
+                    aid = data.aid;
+
+                    //提交照片  //上产照片这个方法 放在里面是为了获得从后端传回了的主键
+                    $(function () {
+                        // 初始化插件
+                        $("#zyupload").zyUpload({
+                            width: "650px",                 // 宽度
+                            height: "400px",                 // 宽度
+                            itemWidth: "140px",                 // 文件项的宽度
+                            itemHeight: "115px",                 // 文件项的高度
+                            url: "../../savepic?aid=" + aid,                  // 上传文件的路径
+                            fileType: ["jpg", "png"],// 上传文件的类型
+                            fileSize: 5120000,                // 上传文件的大小
+                            multiple: false,                    // 是否可以多个文件上传
+                            dragDrop: true,                    // 是否可以拖动上传文件
+                            tailor: false,                    // 是否可以裁剪图片
+                            del: true,                    // 是否可以删除文件
+                            finishDel: true,  				  // 是否在上传文件完成后删除预览
+                            /* 外部获得的回调接口 */
+                            onSelect: function (selectFiles, allFiles) {    // 选择文件的回调方法  selectFile:当前选中的文件  allFiles:还没上传的全部文件
+                                console.info("当前选择了以下文件：");
+                                console.info(selectFiles);
+                            },
+                            onDelete: function (file, files) {              // 删除一个文件的回调方法 file:当前删除的文件  files:删除之后的文件
+                                console.info("当前删除了此文件：");
+                                console.info(file.name);
+                            },
+                            onSuccess: function (file, response) {          // 文件上传成功的回调方法
+                                console.info("此文件上传成功：");
+                                console.info(file.name);
+                                console.info("此文件上传到服务器地址：");
+                                console.info(response);
+                                $("#uploadInf").append("<p>上传成功，文件地址是：" + response + "</p>");
+                            },
+                            onFailure: function (file, response) {          // 文件上传失败的回调方法
+                                console.info("此文件上传失败：");
+                                console.info(file.name);
+                            },
+                            onComplete: function (response) {           	  // 上传完成的回调方法
+                                console.info("文件上传完成");
+                                console.info(response);
+                            }
+                        });
+                    });
+                }
+            });
+
+
+        });
+        var iframeIndex = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(iframeIndex);
+        //  window.parent.location.reload(); //刷新页面
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html style="background-color: #e2e2e2;">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="{{ lay.base.keywords }}">
+    <meta name="description" content="{{ lay.base.description }}">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>发现 世界</title>
+    <link rel="stylesheet" href="../res/layui/css/layui.css">
+    <link rel="stylesheet" href="../res/css/global.css">
+    <style>
+        .header {
+            border-bottom: 1px solid #404553;
+            border-right: 1px solid #404553;
+        }
+    </style>
+    <script src="../js/loginOrsignout.js" charset="UTF-8"></script>
+</head>
+<body class="fly-full" onload="getCookie('uname')">
+
+
+<div class="fly-header layui-bg-black">
+    <div class="layui-container">
+        <a class="fly-logo" href="../zyz.html">
+            <img src="../res/images/logo.png" alt="layui">
+        </a>
+        <ul class="layui-nav fly-nav layui-hide-xs">
+            <li class="layui-nav-item layui-this">
+                <a href=""><i class="iconfont icon-jiaoliu"></i>新闻</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="case.html"><i class="iconfont icon-iconmingxinganli"></i>志愿服务活动</a>
+            </li>
+        </ul>
+
+
+        <ul class="layui-nav fly-nav-user" id="outlogin" style="display: none">
+
+            <!-- 未登入的状态 -->
+            <li class="layui-nav-item">
+                <a class="iconfont icon-touxiang layui-hide-xs" href="../user/login.html"></a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../user/login.html">登入</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../user/reg.html">注册</a>
+            </li>
+        </ul>
+        <ul class="layui-nav fly-nav-user" id="login" style="display: none">
+            <!-- 登入后的状态 -->
+
+            <li class="layui-nav-item">
+                <a class="fly-nav-avatar" href="javascript:;">
+                    <cite class="layui-hide-xs" id="uname"></cite>
+                    <!-- <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>-->
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+                    <dd><a href="../user/index.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>用户中心</a>
+                    </dd>
+                    <hr style="margin: 5px 0;">
+                    <dd><a href="" onclick="delCookie()"><i class="layui-icon"
+                                                            style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>退出</a>
+                    </dd>
+                </dl>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+
+<div class="fly-case-header">
+    <p class="fly-case-year">2020</p>
+    <a href="">
+        <img class="fly-case-banner" src="../res/images/case.png" alt="发现 Layui 年度最佳案例">
+    </a>
+
+</div>
+
+<div class="fly-main" style="overflow: hidden;">
+
+    <div class="layui-tab layui-tab-brief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">近期新闻动态
+            </li>
+        </ul>
+
+
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+
+    </div>
+
+    <div class="layui-tab layui-tab-brief">
+
+    </div>
+</div>
+
+
+<div class="fly-footer">
+    <p><a href="" target="_blank">志愿者社区</a> 2020 &copy; <a href="" target="_blank">Yc 出品</a></p>
+</div>
+
+
+<script src="../../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table;
+        table.render({
+            elem: '#currentTableId',
+            url: '../../../zyz/shownews',
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter', 'exports', 'print', {
+                title: '提示',
+                layEvent: 'LAYTABLE_TIPS',
+                icon: 'layui-icon-tips'
+            }],
+            cols: [[
+                // {field: 'aid', width: 80, title: 'ID', sort: true},
+                {field: 'title', width: 180, title: '标题', align: "center"},
+                {
+                    field: 'img', width: 180, high: 180, title: '图片', align: 'center', templet: "#imgTpl"
+                    // function (d) {return '<div οnclick="photograph(this)"><img src='+d.img+'></div>'}
+                },
+                {field: 'problem', width: 460, title: '具体内容', align: "center"},
+                {field: 'gname', width: 80, title: '发布人'},
+                {field: 'createtime', width: 180, title: '发布时间', sort: true, align: "center"}
+            ]],
+            limits: [10, 15, 20, 25, 50, 100],
+            limit: 10,
+            page: true,
+            skin: 'line'
+        });
+
+        //监听表格复选框选择
+        table.on('checkbox(currentTableFilter)', function (obj) {
+            console.log(obj)
+        });
+
+    });
+</script>
+<script type="text/html" id="imgTpl">
+    <!--当启动时有项目时 需要加上 因为数据存的地址不包含-->
+    <img src="/ssm_war{{d.img}}" style="width:108px;height:180px"/>
+    <!--启动没有项目名时 不需要 一般用这种-->
+    <!--    <img src="{{d.img}}" style="width:108px;height:100px"/>-->
+</script>
+<script>
+
+    layui.config({
+        version: "3.0.0"
+        , base: '../res/mods/' //这里实际使用时，建议改成绝对路径
+    }).extend({
+        fly: 'index'
+    }).use('fly');
+</script>
+</body>
+</html>

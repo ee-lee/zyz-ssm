@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>基于 layui 的极简社区页面模版</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="fly,layui,前端社区">
+    <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
+    <link rel="stylesheet" href="res/layui/css/layui.css">
+    <link rel="stylesheet" href="res/css/global.css">
+
+    <link type="text/css" rel="stylesheet"
+          href="https://www.cnblogs.com/endv/custom.css?v=BM5MMl4C0ytu2WoWDn76/OkdX5A="/>
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet"
+          href="/skins/darkgreentrip/bundle-darkgreentrip-mobile.min.css?v=0pGk3D9Ik_jI4q1TALBT2ybOjIePHS_80_0J4DDOQiY"/>
+    <script src="/js/blog-common.min.js?v=98Fvfd6UZH20B_MF08daNaODjSu879MVR9RHmyvWAlg"></script>
+
+
+</head>
+<body onload="getCookie('uname')">
+<div id="page_begin_html">
+    <div class="sky">
+        <div class="clouds_one"></div>
+        <div class="clouds_two"></div>
+        <div class="clouds_three"></div>
+    </div>
+
+</div>
+<div class="fly-header layui-bg-black">
+    <div class="layui-container">
+        <a class="fly-logo" href="">
+            <img src="res/images/logo.png" alt="layui">
+        </a>
+        <ul class="layui-nav fly-nav layui-hide-xs">
+            <li class="layui-nav-item layui-this">
+                <a href="case/news.html"><i class="iconfont icon-jiaoliu"></i>新闻</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="case/case.html"><i class="iconfont icon-iconmingxinganli"></i>志愿服务活动</a>
+            </li>
+
+        </ul>
+
+        <ul class="layui-nav fly-nav-user" id="outlogin" style="display: none">
+
+            <!-- 未登入的状态 -->
+            <li class="layui-nav-item">
+                <a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="user/login.html">登入</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="user/reg.html">注册</a>
+            </li>
+        </ul>
+        <ul class="layui-nav fly-nav-user" id="login" style="display: none">
+            <!-- 登入后的状态 -->
+
+            <li class="layui-nav-item">
+                <a class="fly-nav-avatar" href="javascript:;">
+                    <cite class="layui-hide-xs" id="uname"></cite>
+                    <!-- <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>-->
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+                    <dd><a href="user/index.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>用户中心</a>
+                    </dd>
+                    <hr style="margin: 5px 0;">
+                    <dd><a href="" onclick="outLogin()" style="text-align: center;">退出</a></dd>
+                </dl>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+<div class="fly-footer">
+    <p><a href="" target="_blank">志愿者社区</a> 2020 &copy; <a href="" target="_blank">Yc 出品</a></p>
+</div>
+
+<script src="res/layui/layui.js"></script>
+<script>
+    layui.config({
+        version: "3.0.0"
+        , base: 'res/mods/' //这里实际使用时，建议改成绝对路径
+    }).extend({
+        fly: 'index'
+    }).use('fly');
+</script>
+
+<script src="js/loginOrsignout.js"></script>
+<script>
+    function outLogin() {
+        var $ = layui.jquery;
+        $.ajax({
+            url: '../../zyz/outLogin', //调用接口
+            method: 'post',
+            data: "",
+            dataType: 'JSON',
+            success: function (data) {
+                window.location = 'zyz.html';
+            }
+        });
+
+    }
+</script>
+</body>
+</html>

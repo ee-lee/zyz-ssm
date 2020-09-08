@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>帐号设置</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="fly,layui,前端社区">
+    <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
+    <link rel="stylesheet" href="../res/layui/css/layui.css">
+    <link rel="stylesheet" href="../res/css/global.css">
+</head>
+<script src="../js/loginOrsignout.js" charset="UTF-8"></script>
+</head>
+<body class="fly-full" onload="getCookie('uname')">
+<div class="fly-header layui-bg-black">
+    <div class="layui-container">
+        <a class="fly-logo" href="../zyz.html">
+            <img src="../res/images/logo.png" alt="layui">
+        </a>
+        <ul class="layui-nav fly-nav layui-hide-xs">
+            <li class="layui-nav-item layui-this">
+                <a href="../case/news.html"><i class="iconfont icon-jiaoliu"></i>新闻</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../case/case.html"><i class="iconfont icon-iconmingxinganli"></i>志愿服务活动</a>
+            </li>
+        </ul>
+        <ul class="layui-nav fly-nav-user" id="outlogin" style="display: none"></ul>
+        <ul class="layui-nav fly-nav-user" id="login" style="display: inline">
+            <!-- 登入后的状态 -->
+
+            <li class="layui-nav-item">
+                <a class="fly-nav-avatar" href="javascript:;">
+                    <cite class="layui-hide-xs" id="uname"></cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+                    <dd><a href="index.html"><i class="layui-icon"
+                                                style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>用户中心</a>
+                    </dd>
+                    <hr style="margin: 5px 0;">
+                    <dd><a href="" onclick="delCookie()"><i class="layui-icon"
+                                                            style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>退出</a>
+                    </dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="layui-container fly-marginTop fly-user-main">
+    <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
+        <li class="layui-nav-item">
+            <a href="index.html">
+                <i class="layui-icon">&#xe612;</i>
+                用户中心
+            </a>
+        </li>
+        <li class="layui-nav-item layui-this">
+            <a href="set.html">
+                <i class="layui-icon">&#xe620;</i>
+                基本设置
+            </a>
+        </li>
+
+    </ul>
+
+    <!--        <div class="site-tree-mobile layui-hide">-->
+    <!--            <i class="layui-icon">&#xe602;</i>-->
+    <!--        </div>-->
+    <!--        <div class="site-mobile-shade"></div>-->
+
+    <!--        <div class="site-tree-mobile layui-hide">-->
+    <!--            <i class="layui-icon">&#xe602;</i>-->
+    <!--        </div>-->
+    <!--        <div class="site-mobile-shade"></div>-->
+
+    <div class="fly-panel fly-panel-user" pad20>
+        <div class="layui-tab layui-tab-brief" lay-filter="user">
+            <ul class="layui-tab-title" id="LAY_mine">
+                <li class="layui-this" lay-id="info">我的资料</li>
+                <li lay-id="pass">密码</li>
+            </ul>
+
+            <div class="layui-tab-content" style="padding: 20px 0;">
+                <div class="layui-form layui-form-pane layui-tab-item layui-show">
+
+                    <div class="layui-form-item">
+                        <table class="layui-hide" id="currentTableId2" lay-filter="currentTableFilter"></table>
+                    </div>
+
+
+                </div>
+
+                <div class="layui-form layui-form-pane layui-tab-item">
+                    <form action="" method="post">
+                        <div class="layui-form-item">
+                            <label for="L_nowpass" class="layui-form-label">当前密码</label>
+                            <div class="layui-input-inline">
+                                <input type="password" id="L_nowpass" name="nowpwd" required lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="L_pass" class="layui-form-label">新密码</label>
+                            <div class="layui-input-inline">
+                                <input type="password" id="L_pass" name="pwd" required lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">6到16个字符</div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="L_repass" class="layui-form-label">确认密码</label>
+                            <div class="layui-input-inline">
+                                <input type="password" id="L_repass" name="repwd" required lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <button class="layui-btn" key="set-mine" lay-submit lay-filter="uppwd" lay-submit>确认修改
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="fly-footer">
+    <p><a href="" target="_blank">志愿者社区</a> 2020 &copy; <a href="" target="_blank">Yc 出品</a></p>
+</div>
+
+<script src="../res/layui/layui.js"></script>
+<!--<script  src="../../../lib/layui-v2.5.5/layui.js"></script>-->
+<script>
+
+    layui.config({
+        version: "2.0.0"
+        , base: '../res/mods/'
+    }).extend({
+        fly: 'index'
+    }).use('fly');
+</script>
+<script>
+    layui.use(['form', 'table'], function () {
+
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table;
+        table.render({
+            elem: '#currentTableId2',
+            url: '../../../zyz/showuser',
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter', 'exports', 'print', {
+                title: '提示',
+                layEvent: 'LAYTABLE_TIPS',
+                icon: 'layui-icon-tips'
+            }],
+            cols: [[
+                {field: 'uname', width: 80, title: '用户名'},
+                {field: 'gender', width: 60, title: '性别', templet: "#genderTpl"},
+                {field: 'email', width: 100, title: '邮箱'},
+                {field: 'age', width: 60, title: '年龄'},
+                {field: 'phone', width: 110, title: '电话'},
+                {field: 'address', width: 120, title: '地址'},
+                {field: 'idcard', width: 120, title: '身份证号'},
+                {field: 'jid', width: 90, title: '街道编号', align: "#center"},
+                {field: 'uissys', width: 150, title: '审核状态', align: "#center", templet: "#uissysTpl"}
+            ]],
+            limits: [10, 15, 20, 25, 50, 100],
+            limit: 1,
+            page: false,
+            skin: 'line'
+        });
+        //监听表格复选框选择
+        table.on('checkbox(currentTableFilter)', function (obj) {
+            console.log(obj)
+        });
+        // 修改密码
+        form.on('submit(uppwd)', function (data) {
+            if (data.field.pwd == data.field.repwd) {
+                $.ajax({
+                    url: '../../../zyz/uppwd',
+                    method: 'post',
+                    data: data.field,
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if (data.result == '成功') {
+                            layer.msg('修改成功', function () {
+                                window.parent.location.reload();
+                            });
+                        } else {
+                            layer.msg('当前密码错误,请重新输入', function () {
+                                window.parent.location.reload();
+
+                            });
+                        }
+                    }
+                });
+                return false;
+            } else {
+                layer.msg('密码不一致,请重新输入', function () {
+                });
+                return false;
+            }
+        });
+
+    });
+</script>
+<script type="text/html" id="uissysTpl">
+    {{#  if(d.uissys==1){ }}
+    <i style="font-size: 16px; color: #14a864;">通过</i>
+    {{#  } else { }}
+    <i style="font-size: 16px; color: #7b7c79;">待定</i>
+    {{#  } }}
+</script>
+
+<script type="text/html" id="genderTpl">
+    {{#  if(d.gender==1){ }}
+    男
+    {{#  } else { }}
+    女
+    {{#  } }}
+</script>
+</body>
+</html>
